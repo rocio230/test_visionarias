@@ -1,11 +1,276 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=https://script.google.com/macros/u/0/s/AKfycbyrMTemYKBcfzjoVE5fhlRauBexhvLpcRA2axPYrXH2pBW-05lRKkBVLnyV0NwsDpp6/exec">
-    <title>Redirigiendo...</title>
-  </head>
-  <body>
-    <p>Abriendo aplicación... Si no carga automáticamente, <a href="https://script.google.com/macros/u/0/s/AKfycbyrMTemYKBcfzjoVE5fhlRauBexhvLpcRA2axPYrXH2pBW-05lRKkBVLnyV0NwsDpp6/exec">hacé clic acá</a>.</p>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test de Roles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #110A21;
+      background-attachment: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      color: #F2F1F6;
+    }
+
+    .card {
+      background: rgba(102, 81, 200, 0.25); 
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 30px;
+      border-radius: 25px;
+      border: 1px solid rgba(102, 81, 200, 0.4);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .logo { width: 400px; max-width: 100%; margin-bottom: 20px; }
+    
+    h2 { color: #F2F1F6; }
+    
+    input[type="text"] {
+      width: 100%; padding: 15px; margin: 10px 0 20px 0;
+      border-radius: 30px;
+      border: 1px solid rgba(102, 81, 200, 0.5);
+      background: rgba(17, 10, 33, 0.6);
+      color: #F2F1F6;
+      box-sizing: border-box; font-family: 'Poppins', sans-serif;
+    }
+    
+    input::placeholder { color: rgba(242, 241, 246, 0.6); }
+
+    button {
+      background: #D6E529;
+      color: #110A21;
+      border: none; padding: 15px;
+      font-weight: 600; cursor: pointer; font-size: 16px;
+      border-radius: 30px;
+      width: 100%; margin-top: 10px;
+      transition: 0.3s;
+    }
+    
+    button:hover { background: #b8c520; color: #110A21; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    
+    /* Estilos para las preguntas del test */
+    .pregunta {
+      text-align: left;
+      margin-bottom: 25px;
+      background: rgba(102, 81, 200, 0.15);
+      padding: 15px;
+      border-radius: 20px;
+      border: 1px solid rgba(102, 81, 200, 0.3);
+    }
+    .pregunta p { font-weight: 600; color: #F2F1F6; margin-top: 0; }
+    
+    .opcion-label {
+      display: block;
+      padding: 12px 15px;
+      margin-bottom: 8px;
+      background: rgba(17, 10, 33, 0.6);
+      border-radius: 25px;
+      cursor: pointer;
+      border: 1px solid rgba(102, 81, 200, 0.4);
+      transition: 0.2s;
+      color: #F2F1F6;
+      font-size: 14px;
+    }
+    .opcion-label:hover { background: rgba(102, 81, 200, 0.5); }
+    .opcion-label input { margin-right: 10px; accent-color: #D6E529; }
+    
+    .loader {
+      border: 4px solid rgba(242, 241, 246, 0.1); 
+      border-top: 4px solid #D6E529;
+      border-radius: 50%; width: 40px; height: 40px;
+      animation: spin 1s linear infinite; margin: 20px auto;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .titulo-destacado {
+      color: #F2F1F6;
+      background: #6651C8;
+      padding: 12px 20px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      display: inline-block;
+      margin-top: 0;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="app">
+    <img src="https://i.postimg.cc/JtVhtkxL/Gemini-Generated-Image-scbjh9scbjh9scbj-removebg-preview.png" class="logo" alt="Logo">
+    
+    <!-- PANTALLA 1: FORMULARIO DEL TEST -->
+    <div id="pantalla-test">
+      <h2 class="titulo-destacado">¿Qué rol tenés en el mundo de la IA?</h2>
+      <input type="text" id="nombre" placeholder="Tu Nombre Completo" required>
+      
+      <!-- INICIO DE ZONA DE PREGUNTAS -->
+      <div id="preguntas-container">
+        
+        <div class="pregunta">
+          <p>1. Cuando tenés que realizar un trabajo práctico para la facultad, vos...</p>
+          <label class="opcion-label"><input type="radio" name="q1" value="A"> Pensás cómo presentar la información de una manera visual y original.</label>
+          <label class="opcion-label"><input type="radio" name="q1" value="B"> Investigás el tema, buscás fuentes y contrastás información.</label>
+          <label class="opcion-label"><input type="radio" name="q1" value="C"> Organizás las tareas, establecés prioridades y armás un cronograma.</label>
+          <label class="opcion-label"><input type="radio" name="q1" value="D"> Te encargás de redactar, explicar las ideas y preparar la exposición.</label>
+        </div>
+
+        <div class="pregunta">
+          <p>2. Cuando tenés un rato libre entre clases, preferís...</p>
+          <label class="opcion-label"><input type="radio" name="q2" value="A"> Dibujar, diseñar, editar o explorar alguna actividad creativa.</label>
+          <label class="opcion-label"><input type="radio" name="q2" value="B"> Leer sobre algún tema que te interese o descubrir algo nuevo.</label>
+          <label class="opcion-label"><input type="radio" name="q2" value="C"> Organizar tus pendientes, actualizar tu agenda o planificar la semana.</label>
+          <label class="opcion-label"><input type="radio" name="q2" value="D"> Conversar con tus compañeras, intercambiar ideas y conocer otras perspectivas.</label>
+        </div>
+
+        <div class="pregunta">
+          <p>3. Si pudieras desarrollar una herramienta con IA para estudiantes universitarias, sería para...</p>
+          <label class="opcion-label"><input type="radio" name="q3" value="A"> crear imágenes, diseños, videos y contenido visual.</label>
+          <label class="opcion-label"><input type="radio" name="q3" value="B"> Investigar, encontrar información y descubrir nuevas conexiones.</label>
+          <label class="opcion-label"><input type="radio" name="q3" value="C"> Organizar apuntes, fechas de entrega y materiales de estudio.</label>
+          <label class="opcion-label"><input type="radio" name="q3" value="D"> Mejorar presentaciones, redactar textos y comunicar ideas.</label>
+        </div>
+
+        <div class="pregunta">
+          <p>4. En un trabajo grupal, tus compañeras suelen destacar que...</p>
+          <label class="opcion-label"><input type="radio" name="q4" value="A"> Siempre aportás ideas diferentes y soluciones originales.</label>
+          <label class="opcion-label"><input type="radio" name="q4" value="B"> Sos curiosa, cuestionás la información y encontrás detalles importantes.</label>
+          <label class="opcion-label"><input type="radio" name="q4" value="C"> Sabés organizar al equipo y lograr que las cosas avancen.</label>
+          <label class="opcion-label"><input type="radio" name="q4" value="D"> Sabés explicar, escuchar y conectar las ideas del grupo.</label>
+        </div>
+
+        <div class="pregunta">
+          <p>5. ¿Para qué utilizás principalmente la IA en tus estudios?</p>
+          <label class="opcion-label"><input type="radio" name="q5" value="A"> Para generar imágenes, explorar diseños o experimentar creativamente</label>
+          <label class="opcion-label"><input type="radio" name="q5" value="B"> Para investigar conceptos, profundizar temas y resolver dudas.</label>
+          <label class="opcion-label"><input type="radio" name="q5" value="C"> Para planificar el estudio, resumir información y organizar tareas.</label>
+          <label class="opcion-label"><input type="radio" name="q5" value="D"> Para redactar, mejorar textos y preparar presentaciones.</label>
+        </div>
+
+        <div class="pregunta">
+          <p>6. Cuando una IA te devuelve una respuesta, ¿qué hacés?</p>
+          <label class="opcion-label"><input type="radio" name="q6" value="A"> La utilizás como punto de partida y la transformás con tus propias ideas.</label>
+          <label class="opcion-label"><input type="radio" name="q6" value="B"> Verificás la información, consultás fuentes y cuestionás los resultados.</label>
+          <label class="opcion-label"><input type="radio" name="q6" value="C"> Seleccionás lo importante, clasificás los datos y organizás la información.</label>
+          <label class="opcion-label"><input type="radio" name="q6" value="D"> Revisás cómo está expresada y pedís ajustes para comunicar mejor el mensaje.</label>
+        </div>
+      </div>
+      <!-- FIN DE ZONA DE PREGUNTAS -->
+      <div id="mensaje-error" style="display:none; color: #ff6b6b; background: rgba(255, 0, 0, 0.15); padding: 12px; border-radius: 15px; border: 1px solid #ff6b6b; margin-bottom: 15px; font-weight: 600; text-align: center;"></div>
+      <button onclick="enviarTest()">Enviar y Descubrir</button>
+    </div>
+
+    <!-- PANTALLA DE RESULTADO FINAL -->
+    <div id="pantalla-resultado" style="display:none;">
+      <h1 id="texto-rol" style="color: #D6E529; font-size: 26px; margin-bottom: 10px;"></h1>
+      <p id="texto-descripcion" style="background: rgba(102, 81, 200, 0.2); padding: 15px; border-radius: 15px; border: 1px solid rgba(102, 81, 200, 0.4); font-size: 19px; text-align: left; line-height: 1.4; color: #F2F1F6;"></p>
+    </div>
+  </div>
+
+  <script>
+  const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbyrMTemYKBcfzjoVE5fhlRauBexhvLpcRA2axPYrXH2pBW-05lRKkBVLnyV0NwsDpp6/exec";
+  var nombreChica = "";
+
+  function mostrarError(mensaje) {
+    var divError = document.getElementById('mensaje-error');
+    divError.innerText = mensaje;
+    divError.style.display = 'block';
+    divError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function ocultarError() {
+    var divError = document.getElementById('mensaje-error');
+    divError.style.display = 'none';
+    divError.innerText = '';
+  }
+
+  function enviarTest() {
+    ocultarError();
+    nombreChica = document.getElementById('nombre').value.trim();
+    
+    if (nombreChica === "") {
+      mostrarError("Por favor, escribí tu nombre completo para continuar.");
+      return;
+    }
+
+    // Recolectar las 6 respuestas
+    var respuestas = [];
+    for (var i = 1; i <= 6; i++) {
+      var seleccion = document.querySelector('input[name="q' + i + '"]:checked');
+      if (!seleccion) {
+        mostrarError("Te falta responder la pregunta " + i + ".");
+        return;
+      }
+      respuestas.push(seleccion.value);
+    }
+
+    // Contar qué letra (A, B, C o D) salió más veces
+    var conteo = { "A": 0, "B": 0, "C": 0, "D": 0 };
+    respuestas.forEach(function(letra) {
+      conteo[letra]++;
+    });
+
+    // Determinar la letra ganadora
+    var rolGanador = "A";
+    var maxVotos = 0;
+    for (var letra in conteo) {
+      if (conteo[letra] > maxVotos) {
+        maxVotos = conteo[letra];
+        rolGanador = letra;
+      }
+    }
+
+    // Desactivar el botón para evitar doble envío durante la petición
+    var boton = document.querySelector("button");
+    boton.disabled = true;
+    boton.innerText = "Guardando...";
+
+    // Enviar a Apps Script mediante fetch()
+    fetch(URL_APPS_SCRIPT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        nombre: nombreChica,
+        rolTest: rolGanador
+      })
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(res) {
+      if (res && res.exito) {
+        document.getElementById('pantalla-test').style.display = 'none';
+        document.getElementById('pantalla-resultado').style.display = 'block';
+
+        document.getElementById('texto-rol').innerText = res.rol;
+        document.getElementById('texto-descripcion').innerText = res.descripcion;
+      } else {
+        mostrarError(res.mensaje || "Ocurrió un error al registrar tu respuesta.");
+        boton.disabled = false;
+        boton.innerText = "Enviar y Descubrir";
+      }
+    })
+    .catch(function(err) {
+      mostrarError("Error de conexión: " + err.message);
+      boton.disabled = false;
+      boton.innerText = "Enviar y Descubrir";
+    });
+  }
+  </script>
+</body>
 </html>
